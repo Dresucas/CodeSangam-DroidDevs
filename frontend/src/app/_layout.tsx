@@ -13,10 +13,13 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: "#FFFFFF" },
         }}
       >
-        <Stack.Screen name="index" />
-        <Stack.Screen name="onboarding" />
-        <Stack.Screen name="permissions" />
-        <Stack.Screen name="(tabs)" />
+  <Stack.Screen name="index" />
+<Stack.Screen name="onboarding" />
+<Stack.Screen name="permissions" />
+<Stack.Screen name="(tabs)" />
+<Stack.Screen name="gallery" />
+<Stack.Screen name="photo/[id]" options={{ animation: "fade" }} />
+<Stack.Screen name="settings" />
       </Stack>
     </>
   );
