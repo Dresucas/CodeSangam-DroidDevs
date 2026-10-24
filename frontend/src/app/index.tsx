@@ -1,98 +1,111 @@
-import * as Device from 'expo-device';
-import { Platform, StyleSheet } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import React, { useEffect } from "react";
+import { View, Text, StyleSheet, Image, Dimensions } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
+import { useRouter } from "expo-router";
+import { Feather } from "@expo/vector-icons";
 
-import { AnimatedIcon } from '@/components/animated-icon';
-import { HintRow } from '@/components/hint-row';
-import { ThemedText } from '@/components/themed-text';
-import { ThemedView } from '@/components/themed-view';
-import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+const { width, height } = Dimensions.get("window");
 
-function getDevMenuHint() {
-  if (Platform.OS === 'web') {
-    return <ThemedText type="small">use browser devtools</ThemedText>;
-  }
-  if (Device.isDevice) {
-    return (
-      <ThemedText type="small">
-        shake device or press <ThemedText type="code">m</ThemedText> in terminal
-      </ThemedText>
-    );
-  }
-  const shortcut = Platform.OS === 'android' ? 'cmd+m (or ctrl+m)' : 'cmd+d';
+export default function SplashScreen() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      router.replace("/onboarding");
+    }, 2500);
+
+    return () => clearTimeout(timer);
+  }, [router]);
+
   return (
-    <ThemedText type="small">
-      press <ThemedText type="code">{shortcut}</ThemedText>
-    </ThemedText>
-  );
-}
+    <View style={styles.container}>
+      {/* Background Scenic Landscape Wallpaper */}
+      <Image
+        source={{
+          uri: "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1200&q=85",
+        }}
+        style={styles.backgroundImage}
+        resizeMode="cover"
+      />
 
-export default function HomeScreen() {
-  return (
-    <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
-        <ThemedView style={styles.heroSection}>
-          <AnimatedIcon />
-          <ThemedText type="title" style={styles.title}>
-            Welcome to&nbsp;Expo
-          </ThemedText>
-        </ThemedView>
+      {/* Atmospheric Twilight Gradient Overlay */}
+      <LinearGradient
+        colors={[
+          "rgba(15, 23, 42, 0.4)",
+          "rgba(107, 33, 168, 0.25)",
+          "rgba(15, 23, 42, 0.75)",
+        ]}
+        locations={[0, 0.55, 1]}
+        style={StyleSheet.absoluteFillObject}
+      />
 
-        <ThemedText type="code" style={styles.code}>
-          get started
-        </ThemedText>
+      {/* Centered Brand Presentation */}
+      <View style={styles.content}>
+        {/* Apple-style Frosted Glass Icon Badge */}
+        <View style={styles.iconBadge}>
+          <Feather name="image" size={38} color="#FFFFFF" />
+        </View>
 
-        <ThemedView type="backgroundElement" style={styles.stepContainer}>
-          <HintRow
-            title="Try editing"
-            hint={<ThemedText type="code">src/app/index.tsx</ThemedText>}
-          />
-          <HintRow title="Dev tools" hint={getDevMenuHint()} />
-          <HintRow
-            title="Fresh start"
-            hint={<ThemedText type="code">npm run reset-project</ThemedText>}
-          />
-        </ThemedView>
+        {/* Title */}
+        <Text style={styles.appName}>Mirror Archive</Text>
 
-        {Platform.OS === 'web' && <WebBadge />}
-      </SafeAreaView>
-    </ThemedView>
+        {/* Tagline */}
+        <Text style={styles.tagline}>
+          Your Photos. Organized.{"\n"}Smarter.
+        </Text>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
+    backgroundColor: "#0F172A",
+    justifyContent: "center",
+    alignItems: "center",
   },
-  safeArea: {
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
-    maxWidth: MaxContentWidth,
+  backgroundImage: {
+    width,
+    height,
+    position: "absolute",
   },
-  heroSection: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    flex: 1,
-    paddingHorizontal: Spacing.four,
-    gap: Spacing.four,
+  content: {
+    alignItems: "center",
+    justifyContent: "center",
+    paddingHorizontal: 28,
+    zIndex: 10,
   },
-  title: {
-    textAlign: 'center',
+  iconBadge: {
+    width: 82,
+    height: 82,
+    borderRadius: 22,
+    backgroundColor: "rgba(255, 255, 255, 0.18)",
+    borderWidth: 1.5,
+    borderColor: "rgba(255, 255, 255, 0.35)",
+    justifyContent: "center",
+    alignItems: "center",
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 10 },
+    shadowOpacity: 0.25,
+    shadowRadius: 18,
+    elevation: 8,
   },
-  code: {
-    textTransform: 'uppercase',
+  appName: {
+    fontSize: 32,
+    fontWeight: "700",
+    color: "#FFFFFF",
+    letterSpacing: -0.5,
+    marginBottom: 8,
+    textAlign: "center",
   },
-  stepContainer: {
-    gap: Spacing.three,
-    alignSelf: 'stretch',
-    paddingHorizontal: Spacing.three,
-    paddingVertical: Spacing.four,
-    borderRadius: Spacing.four,
+  tagline: {
+    fontSize: 16,
+    fontWeight: "400",
+    color: "rgba(255, 255, 255, 0.82)",
+    textAlign: "center",
+    lineHeight: 22,
+    letterSpacing: 0.2,
   },
 });
