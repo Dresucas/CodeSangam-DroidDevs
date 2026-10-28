@@ -10,7 +10,7 @@ export async function prepareImageForHashing(imageUri: string): Promise<string> 
     const result = await ImageManipulator.manipulateAsync(
         imageUri,
         actions,
-        { format: ImageManipulator.SaveFormat.JPEG, compress: 0.2 }
+        { format: ImageManipulator.SaveFormat.JPEG, compress: 0.4 }
     );
     
     
