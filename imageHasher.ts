@@ -1,4 +1,4 @@
-
+// Core dHash and Hamming Distance utilities
 export function getHammingDistance(hash1: bigint, hash2: bigint): number {
     let xorResult = hash1 ^ hash2;
     let distance = 0;
