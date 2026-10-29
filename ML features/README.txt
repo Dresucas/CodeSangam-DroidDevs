@@ -14,3 +14,10 @@ Files:
      - Receipts
      - Screenshots
      - Others
+REQUIRED DEPENDENCY:
+
+Add the following line inside the dependencies { } section
+of the Focal app-level build.gradle.kts file:
+
+implementation("com.google.mlkit:image-labeling:17.0.9")
+
